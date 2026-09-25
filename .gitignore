@@ -1,0 +1,4 @@
+.local-check/
+artifacts/
+node_modules/
+*.log
