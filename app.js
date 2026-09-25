@@ -59,6 +59,19 @@ $('sound').addEventListener('click', async () => { try { if (!audioContext) audi
 function readSharedWish() { const params = new URLSearchParams(location.hash.slice(1)); if (params.has('wish')) openCard({ recipient: (params.get('to') || '').slice(0,20), sender: (params.get('from') || '').slice(0,20), message: (params.get('wish') || defaultMessage).slice(0,160), title: (params.get('title') || '中秋快乐').slice(0,20) }); }
 readSharedWish(); window.addEventListener('hashchange', readSharedWish);
 let secretIndex = 0;
+$('song-play')?.addEventListener('click', () => {
+  const player = $('music-player');
+  if (!player.hidden) return;
+  const frame = document.createElement('iframe');
+  frame.title = $('song-play').textContent.trim();
+  frame.src = `https://www.youtube-nocookie.com/embed/${$('song-play').dataset.video}?autoplay=1&rel=0`;
+  frame.allow = 'autoplay; encrypted-media; picture-in-picture';
+  frame.allowFullscreen = true;
+  frame.referrerPolicy = 'strict-origin-when-cross-origin';
+  $('music-video').append(frame);
+  player.hidden = false;
+});
+$('close-player')?.addEventListener('click', () => { $('music-video').replaceChildren(); $('music-player').hidden = true; });
 $('moon-secret')?.addEventListener('click', () => {
   if (!activeProfile) return;
   $('secret-message').textContent = activeProfile.secrets[secretIndex++ % activeProfile.secrets.length];
