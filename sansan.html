@@ -6,7 +6,7 @@
   <title>给三三的月光来信 · 中秋快乐</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="personal.css"><link rel="stylesheet" href="duet.css">
 </head>
 <body class="personal theme-rose" data-recipient="sansan">
-  <header class="header"><a class="brand" href="sansan.html" aria-label="给三三的月光来信"><span class="brand-icon">☾</span>月下寄相思<span class="brand-en">FOR SANSAN</span></a><button class="song-link" id="song-play" type="button" data-video="fooyt-XpRCY" aria-label="在页面中播放《小白》">♫ 播放《小白》</button><button class="sound" id="sound" aria-pressed="false"><span>♫</span> <span id="sound-label">听见月色</span></button></header>
+  <header class="header"><a class="brand" href="sansan.html" aria-label="给三三的月光来信"><span class="brand-icon">☾</span>月下寄相思<span class="brand-en">FOR SANSAN</span></a><button class="sound" id="sound" aria-pressed="false" aria-label="播放《水边的阿狄丽娜》"><span>♫</span> <span id="sound-label">播放钢琴曲</span></button></header>
   <main>
     <section class="hero" aria-labelledby="title">
       <div class="hero-copy"><div class="eyebrow"><span></span> 八月十五 · 一封只写给三三的信 <span></span></div><h1 id="title"><small>亲爱的三三，</small>愿你<span>自在明亮</span><i class="seal">中秋<br>安康</i></h1><p class="intro">像一张干净的信纸，留给你一轮柔软的月亮。<br>愿你的日子轻一点、甜一点。</p><button class="primary" id="start">拆开这封月光来信 <span>↗</span></button><div class="hero-note"><span class="small-moon">◔</span> 愿你被温柔照亮，也拥有自己的光</div></div>
@@ -17,7 +17,7 @@
       </div>
     </section>
     <div class="secret-note"><span>☾ 月亮的悄悄话</span><p id="secret-message" aria-live="polite">点一点月亮，听听它想对你说什么。</p></div>
-    <figure class="song-quote"><blockquote>“某道星光很漂亮”</blockquote><figcaption>《小白》 · 周柏豪演唱 / 陈咏谦作词</figcaption></figure>
+    <figure class="song-quote"><blockquote>愿琴声随月光，轻轻落在你身旁。</blockquote><figcaption>配乐：《水边的阿狄丽娜》 · 理查德·克莱德曼演奏</figcaption></figure>
     <div class="poem-divider"><span></span><i>✧</i><p>月亮只有一个，给三三的祝福有很多</p><i>✧</i><span></span></div>
     <section class="wishes" id="wishes" aria-labelledby="wishes-title"><div class="section-heading"><div><p class="eyebrow">A LITTLE WHITE LETTER FOR SANSAN</p><h2 id="wishes-title">给三三的三份小美好</h2></div><p>一封信，一盏灯，还有月亮为你藏好的好运。</p></div>
       <div class="cards"><article class="card letter-card"><div class="card-top"><span class="card-icon">✉</span><span class="card-number">01 / 寄心意</span></div><h3>有些话，想慢慢说给你听</h3><p>生活或许匆忙，但这份祝福是认真的。</p><div class="letter-preview"><span class="letter-salutation">To. 三三</span><p>不用一直很厉害，<br>也不用事事都满分。<br>愿你按照自己的节奏，<br>慢慢走，常常笑。</p><span class="letter-mark">中秋快乐，今天也要开心呀。</span></div><button class="card-button" id="open-letter">读完这封信 <span>↗</span></button></article>
@@ -26,9 +26,9 @@
     </section>
     <footer><span class="footer-moon">☾</span><p>三三，愿你常常开心，偶尔任性，永远做自己。</p><span>中秋快乐。不止中秋，每一天都要快乐。</span><div class="footer-bottom"><span>月下寄相思 · MID-AUTUMN FESTIVAL</span><span>以月为笺，以心为墨 <i>✧</i></span></div></footer>
   </main>
-  <aside class="music-player" id="music-player" aria-label="播放《小白》" hidden><div class="music-player-head"><span>♫ 播放《小白》</span><button id="close-player" type="button" aria-label="关闭音乐播放器">×</button></div><div class="music-video" id="music-video"></div></aside>
   <div class="flying-lanterns" id="sky" aria-hidden="true"></div><div class="toast" id="toast" role="status"></div>
   <dialog id="result"><button class="close" id="close-dialog" aria-label="关闭">×</button><div class="dialog-moon">☾</div><p class="eyebrow" id="result-kicker">一封月光来信</p><h2 id="result-title">中秋快乐</h2><p class="result-to" id="result-to"></p><p class="result-message" id="result-message"></p><p class="result-from" id="result-from"></p><div class="dialog-actions"><button class="primary" id="share">复制祝福链接 ↗</button><button class="secondary" id="save">保存祝福卡片 ↓</button></div><p class="dialog-foot">天涯共此时 · 千里共婵娟</p></dialog>
+  <audio id="gift-audio" src="assets/ballade-pour-adeline-web.mp3" preload="auto" loop></audio>
   <script src="profiles.js"></script><script src="app.js"></script>
 </body>
 </html>

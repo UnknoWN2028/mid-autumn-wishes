@@ -13,7 +13,8 @@ function openCard(data, fortune = false) {
   if (!$('result').open) $('result').showModal();
 }
 function openPersonalLetter() { openCard({ recipient: activeProfile.name, sender: '', message: activeProfile.message, title: activeProfile.title }); }
-$('start').addEventListener('click', () => { if (activeProfile) { openPersonalLetter(); return; } $('wishes').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); $('recipient').focus({ preventScroll: true }); });
+function startPersonalMusic() { const track = $('gift-audio'); if (track && track.paused) { track.volume = .46; track.play().catch(() => toast('点右上角音乐按钮再试一次')); } }
+$('start').addEventListener('click', () => { if (activeProfile) { startPersonalMusic(); openPersonalLetter(); return; } $('wishes').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); $('recipient').focus({ preventScroll: true }); });
 $('open-letter')?.addEventListener('click', openPersonalLetter);
 $('wish-form')?.addEventListener('submit', (event) => { event.preventDefault(); openCard({ recipient: $('recipient').value.trim(), sender: $('sender').value.trim(), message: $('message').value.trim() || defaultMessage, title: '中秋快乐' }); });
 $('close-dialog').addEventListener('click', () => $('result').close());
@@ -55,7 +56,17 @@ $('save').addEventListener('click', async () => {
 let audioContext, musicTimer, musicOn = false, noteIndex = 0;
 const melody = [523.25, 659.25, 783.99, 659.25, 587.33, 523.25, 440, 392, 440, 523.25, 587.33, 659.25, 587.33, 523.25, 440, 523.25];
 function playNote() { const oscillator = audioContext.createOscillator(); const gain = audioContext.createGain(); oscillator.type = 'sine'; oscillator.frequency.value = melody[noteIndex++ % melody.length]; gain.gain.setValueAtTime(0, audioContext.currentTime); gain.gain.linearRampToValueAtTime(.075, audioContext.currentTime + .04); gain.gain.exponentialRampToValueAtTime(.001, audioContext.currentTime + 1.7); oscillator.connect(gain); gain.connect(audioContext.destination); oscillator.start(); oscillator.stop(audioContext.currentTime + 1.8); oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); }; }
-$('sound').addEventListener('click', async () => { try { if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)(); if (musicOn) { clearInterval(musicTimer); await audioContext.suspend(); musicOn = false; } else { await audioContext.resume(); playNote(); musicTimer = setInterval(playNote, 850); musicOn = true; } $('sound').setAttribute('aria-pressed', String(musicOn)); $('sound-label').textContent = musicOn ? '暂停月色' : '听见月色'; } catch { toast('当前浏览器暂不支持播放音乐'); } });
+const giftAudio = $('gift-audio');
+if (giftAudio) {
+  const updateGiftSound = () => { const playing = !giftAudio.paused; $('sound').setAttribute('aria-pressed', String(playing)); $('sound').setAttribute('aria-label', `${playing ? '暂停' : '播放'}《水边的阿狄丽娜》`); $('sound-label').textContent = playing ? '暂停钢琴曲' : '播放钢琴曲'; };
+  giftAudio.addEventListener('play', updateGiftSound);
+  giftAudio.addEventListener('pause', updateGiftSound);
+  giftAudio.addEventListener('error', () => toast('钢琴曲加载失败，请检查网络后重试'));
+}
+$('sound').addEventListener('click', async () => {
+  if (giftAudio) { if (giftAudio.paused) startPersonalMusic(); else giftAudio.pause(); return; }
+  try { if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)(); if (musicOn) { clearInterval(musicTimer); await audioContext.suspend(); musicOn = false; } else { await audioContext.resume(); playNote(); musicTimer = setInterval(playNote, 850); musicOn = true; } $('sound').setAttribute('aria-pressed', String(musicOn)); $('sound-label').textContent = musicOn ? '暂停月色' : '听见月色'; } catch { toast('当前浏览器暂不支持播放音乐'); }
+});
 function readSharedWish() { const params = new URLSearchParams(location.hash.slice(1)); if (params.has('wish')) openCard({ recipient: (params.get('to') || '').slice(0,20), sender: (params.get('from') || '').slice(0,20), message: (params.get('wish') || defaultMessage).slice(0,160), title: (params.get('title') || '中秋快乐').slice(0,20) }); }
 readSharedWish(); window.addEventListener('hashchange', readSharedWish);
 let secretIndex = 0;
